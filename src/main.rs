@@ -1,4 +1,7 @@
 use std::io::{self, Write};
+use crate::tokenizer::tokenize;
+
+mod tokenizer;
 
 fn main() {
 
@@ -22,11 +25,19 @@ fn main() {
             break;
         }
 
-        let trimmed = input.trim().to_lowercase();
+        let trimmed = input.trim();
+
         if trimmed == "quit" || trimmed == "exit" {
             break;
         }
         
-        println!("{}", input.trim());
+        let tokens = tokenize(trimmed);
+
+        match tokens {
+            Ok(c) => println!("{:?}", c),
+            Err(e) => {
+                eprintln!("{}", e)
+            }
+        }
     }
 }
